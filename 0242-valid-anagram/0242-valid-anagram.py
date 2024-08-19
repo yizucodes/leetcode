@@ -6,20 +6,16 @@ class Solution:
 
         for char in s:
             if char not in setS:
-                setS[char] = 0
+                setS[char] = 1  # Initialize to 1 because it's the first occurrence
             else:
-                currentVal = setS[char]
-                setS[char] = currentVal + 1
+                setS[char] += 1  # Increment by 1 for subsequent occurrences
         
         setT = {}
 
         for char in t:
             if char not in setT:
-                setT[char] = 0
+                setT[char] = 1  # Initialize to 1 for the first occurrence
             else:
-                currentVal = setT[char]
-                setT[char] = currentVal + 1
+                setT[char] += 1  # Increment by 1 for subsequent occurrences
 
-        return setT == setS
-        
-        
+        return setT == setS  # Compare the two dictionaries
