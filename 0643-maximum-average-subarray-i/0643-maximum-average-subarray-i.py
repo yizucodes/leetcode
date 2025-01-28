@@ -1,7 +1,7 @@
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
         if k > len(nums):
-            return None
+            return 0
         
         # length is 1 and k is 1 return nums[0]
         if len(nums) == 1 and k == 1:
