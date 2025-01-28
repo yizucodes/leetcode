@@ -1,15 +1,30 @@
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
-        # Calculate first window sum
-        currSum = sum(nums[:k])
-        maxSum = currSum
+        if k > len(nums):
+            return None
         
-        # Slide from left to right
-        for i in range(len(nums) - k):
-            # Remove leftmost element of current window
-            currSum -= nums[i]
-            # Add next element on the right
-            currSum += nums[i + k]
-            maxSum = max(maxSum, currSum)
+        # length is 1 and k is 1 return nums[0]
+        if len(nums) == 1 and k == 1:
+            return nums[0]
+        
+        currSum = None
+        currAvg = None
+        maxAvg = float('-inf')
+        window = nums[:k]
+
+        for left in range(len(nums) - k + 1):
+            right = left + k
+            if currSum is None:
+                currSum = sum(window)
+            else:
+                currSum = currSum - nums[left - 1]
+                currSum = currSum + nums[right - 1]
             
-        return maxSum / k
+            currAvg = currSum / k
+            maxAvg = max(maxAvg, currAvg)
+        
+        return maxAvg   
+
+            
+
+
