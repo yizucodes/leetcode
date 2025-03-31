@@ -1,32 +1,43 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        # empty string
         if len(s) == 0:
             return 0
+
+        # one letter
         if len(s) == 1:
             return 1
+
+        currMax = 0
         l = 0
         r = 0
-        max_len = 0
 
-        char_set = set()
-
+        charSet = set()
+        currLen = 0
         while r < len(s):
-            
             currChar = s[r]
-            # If curr char not in set
-            if s[r] not in char_set:
-                char_set.add(currChar)
+            # add to set if letter not seen --> move right
+            if currChar not in charSet:
+                charSet.add(currChar)
                 r += 1
-                max_len = max(max_len, r - l)
-
-            # Duplicate
+                currLen += 1
+                currMax = max(currMax, currLen)
             else:
-                char_set.remove(s[l])
-                l += 1
-        
+                # shrink until no duplicates
 
-    
-        return max_len
+                # while the left pter letter is in the set, then remove letter from set and decrement currMax
+                while s[r] in charSet:
+                    charSet.remove(s[l])
+                    l += 1
+                    currLen -= 1
 
+            print('left', l)
+            print('right', r)
+            print("set ", charSet)
+            print("currMax ", currMax)
+            # if seen pop it --> move left
 
+        # expand when substring is w/o duplicates
+        return currMax
 
+        abcabcbb
