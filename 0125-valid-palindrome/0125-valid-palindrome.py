@@ -1,20 +1,28 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
+        # remove non letters and numbers
+        cleaned = re.sub(r'[^a-zA-Z0-9]', '', s)
+        # trim spacing
+        cleaned = cleaned.strip()
+        # lowercase everything
+        cleaned = cleaned.lower()
 
-        cleanS = ''.join(char for char in s if char.isalnum()).lower()
+        l = 0
+        r = len(cleaned) - 1
 
-        if cleanS == "" or len(cleanS) == 1:
+        if len(cleaned) <= 1:
             return True
 
-        startInd = 0
-        endInd = len(cleanS) - 1
-
-        while startInd < endInd:
-            if cleanS[startInd] != cleanS[endInd]:
+        # iterate as long as they are 
+        while l < r:
+            print('left', l)
+            print('right', r)
+            if cleaned[r] == cleaned[l]:
+                l += 1
+                r -= 1
+            else:
                 return False
-
-            startInd += 1
-            endInd -= 1
-        
+            
+        # move right by 1 and left by 1 
+        # if right and left match then it's a palindrome
         return True
-        
