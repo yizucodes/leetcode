@@ -1,20 +1,23 @@
-from collections import Counter
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        if len(nums) == 2:
+        # 2 numbers
+        if len(nums) == 2 and nums[0] + nums[1] == target:
             return [0, 1]
-            
+
+        res = []
         numMap = {}
+
+        # number: index
         for i in range(len(nums)):
             currNum = nums[i]
-            # check if complement exists
-            # if exists return [iNum, iComplment]
             complement = target - currNum
-            if complement in numMap:
+            # if number does not add to target
+            if complement not in numMap:
+                numMap[currNum] = i
+            else:
                 return [i, numMap[complement]]
 
-            # store index
-            numMap[currNum] = i
 
-        # No answer
+        
+        # no solution
         return []
