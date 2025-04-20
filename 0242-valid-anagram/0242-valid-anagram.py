@@ -17,8 +17,8 @@ class Solution:
 
         # Return as it means that all the letters have freq 0
         # If there is any letter with a freq > 0 return False
-        for num in freqMap.items():
-            if int(num) > 0:
+        for _, freq in freqMap.items():
+            if freq > 0:
                 return False
         return True
         
