@@ -5,9 +5,8 @@ class Solution:
         n = len(numbers)
         right = n - 1
         
-        currSum = numbers[left] + numbers[right]
-
         while left < right:
+            currSum = numbers[left] + numbers[right]
             if currSum == target:
                 # ensure to add 1 to both indices as it's one indexed
                 return [left + 1, right + 1]
@@ -16,8 +15,5 @@ class Solution:
             # currSum < target
             else:
                 left += 1
-            
-            # update sum
-            currSum = numbers[left] + numbers[right]
 
-        return []
+        return res
