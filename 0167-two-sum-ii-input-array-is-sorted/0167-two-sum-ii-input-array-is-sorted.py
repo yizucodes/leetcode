@@ -1,13 +1,11 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         # check for empty --> empty array
-
         left = 0
         n = len(numbers)
         right = n - 1
         
         currSum = numbers[left] + numbers[right]
-
 
         while left < right:
             if currSum == target:
