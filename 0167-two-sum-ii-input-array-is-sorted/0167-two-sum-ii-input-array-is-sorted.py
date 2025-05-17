@@ -10,12 +10,6 @@ class Solution:
 
 
         while left < right:
-            print("currSum", currSum)
-            print("target", target)
-
-
-            print('left', left)
-            print('right', right)
             if currSum == target:
                 # ensure to add 1 to both indices as it's one indexed
                 return [left + 1, right + 1]
@@ -25,6 +19,7 @@ class Solution:
             else:
                 left += 1
             
+            # update sum
             currSum = numbers[left] + numbers[right]
 
         return []
