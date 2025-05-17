@@ -1,18 +1,30 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        # check for empty --> empty array
 
-        l = 0
-        r = len(numbers) - 1
+        left = 0
+        n = len(numbers)
+        right = n - 1
         
-        while l < r:
-            currSum = numbers[l] + numbers[r]
+        currSum = numbers[left] + numbers[right]
+
+
+        while left < right:
+            print("currSum", currSum)
+            print("target", target)
+
+
+            print('left', left)
+            print('right', right)
             if currSum == target:
-                return [l + 1, r + 1]
-            
-            if currSum > target:
-                r -= 1
+                # ensure to add 1 to both indices as it's one indexed
+                return [left + 1, right + 1]
+            elif currSum > target:
+                right -= 1
+            # currSum < target
             else:
-                l += 1
-    
+                left += 1
+            
+            currSum = numbers[left] + numbers[right]
+
         return []
-        
