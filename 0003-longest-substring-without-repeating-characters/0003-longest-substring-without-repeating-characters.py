@@ -15,22 +15,12 @@ class Solution:
 
         currChars = set()
         for right in range(len(s)):
-            # if no duplicates, expand
-            if s[right] not in currChars:
-                # check if currLen > maxLen
-                currLen = right - left + 1
-                if currLen > maxLen:
-                    maxLen = currLen
-                currChars.add(s[right])
-        
-            # if dups, shrink until there is no dups
-            else:
-                while s[right] in currChars:
-                    currChars.remove(s[left])
-                    left += 1
-                    
-           
 
+            # if dups, shrink until there is no dups
+            while s[right] in currChars:
+                currChars.remove(s[left])
+                left += 1
+                    
             currLen = right - left + 1
             if currLen > maxLen:
                 maxLen = currLen
