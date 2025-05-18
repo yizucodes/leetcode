@@ -1,43 +1,42 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        # empty string
+
+        # empty string --> 0
         if len(s) == 0:
             return 0
 
-        # one letter
+        # one letter -> 1
         if len(s) == 1:
             return 1
-
-        currMax = 0
-        l = 0
-        r = 0
-
-        charSet = set()
+        
+        maxLen = 0
         currLen = 0
-        while r < len(s):
-            currChar = s[r]
-            # add to set if letter not seen --> move right
-            if currChar not in charSet:
-                charSet.add(currChar)
-                r += 1
-                currLen += 1
-                currMax = max(currMax, currLen)
+        left = 0
+
+        currChars = set()
+        for right in range(len(s)):
+            # if no duplicates, expand
+            if s[right] not in currChars:
+                # check if currLen > maxLen
+                currLen = right - left + 1
+                if currLen > maxLen:
+                    maxLen = currLen
+                currChars.add(s[right])
+        
+            # if dups, shrink until there is no dups
             else:
-                # shrink until no duplicates
+                while s[right] in currChars:
+                    currChars.remove(s[left])
+                    left += 1
+                    
+           
 
-                # while the left pter letter is in the set, then remove letter from set and decrement currMax
-                while s[r] in charSet:
-                    charSet.remove(s[l])
-                    l += 1
-                    currLen -= 1
+            currLen = right - left + 1
+            if currLen > maxLen:
+                maxLen = currLen
+            currChars.add(s[right])
 
-            print('left', l)
-            print('right', r)
-            print("set ", charSet)
-            print("currMax ", currMax)
-            # if seen pop it --> move left
+        return maxLen
 
-        # expand when substring is w/o duplicates
-        return currMax
 
-        abcabcbb
+
