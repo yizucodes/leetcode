@@ -22,7 +22,7 @@ class Solution:
                 winFreqMap[s2[l]] -= 1
                 # delete from map
                 if winFreqMap[l] == 0:
-                    del winFreqMap[s2[l]]
+                    del winFreqMap[l]
                 l += 1
 
             if len(s1) == (r - l + 1):
