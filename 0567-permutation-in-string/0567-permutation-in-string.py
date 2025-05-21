@@ -19,9 +19,9 @@ class Solution:
 
             # check if lenght of 1 == s2
                 # winFreq == s1Freq --> return Tru
-            if len(s1) == (r - l + 1):
-                if winFreqMap == s1Map:
-                    return True
+            # if len(s1) == (r - l + 1):
+            #     if winFreqMap == s1Map:
+            #         return True
             
             # shrink len(window) > len(s1)
             while (r - l + 1) > len(s1):
@@ -31,6 +31,10 @@ class Solution:
                 if winFreqMap[l] == 0:
                     del winFreqMap[l]
                 l += 1
+
+            if len(s1) == (r - l + 1):
+                if winFreqMap == s1Map:
+                    return True
 
         return False
                 
