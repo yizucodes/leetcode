@@ -21,8 +21,8 @@ class Solution:
                 # remove s[l] from winFreq
                 winFreqMap[s2[l]] -= 1
                 # delete from map
-                if winFreqMap[s2[l]] == 0:
-                    del winFreqMap[s2[l]]
+                # if winFreqMap[s2[l]] == 0:
+                #     del winFreqMap[s2[l]]
                 l += 1
 
             if len(s1) == (r - l + 1):
