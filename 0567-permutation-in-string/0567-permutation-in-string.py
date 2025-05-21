@@ -1,10 +1,6 @@
 from collections import Counter, defaultdict
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-
-        if len(s1) == 1 and s1 in s2 or s1 == s2:
-            return True
-
         # init map for s1
         s1Map = Counter(s1)
         l = 0
@@ -20,9 +16,6 @@ class Solution:
             while (r - l + 1) > len(s1):
                 # remove s[l] from winFreq
                 winFreqMap[s2[l]] -= 1
-                # delete from map
-                # if winFreqMap[s2[l]] == 0:
-                #     del winFreqMap[s2[l]]
                 l += 1
 
             if len(s1) == (r - l + 1):
