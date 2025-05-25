@@ -12,7 +12,6 @@ class Solution:
         freqMapS = Counter(s)
         freqMapWin = Counter()
         l = 0
-        maxLen = -1
 
         # expand window when window size - maxCharCount <= ke
         for r in range(len(s)):
