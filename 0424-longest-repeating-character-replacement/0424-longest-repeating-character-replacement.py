@@ -2,8 +2,6 @@ from collections import Counter
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         
-
-
         # if k is 0 return maxCharCount
 
         # if s is one letter, k is 0 then return 1
