@@ -23,7 +23,7 @@ class Solution:
 
             # shrink when window is greater
             while (r - l + 1) > len(p):
-                removedChar = s[l]
+                removedChar = s[l]i
                 freqWin[removedChar] -= 1
                 l += 1
                 if freqWin == freqP:
