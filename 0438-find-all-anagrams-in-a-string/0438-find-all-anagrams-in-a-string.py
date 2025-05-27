@@ -29,6 +29,5 @@ class Solution:
                 if freqWin == freqP:
                     res.append(l)
               
-
         return res
 
