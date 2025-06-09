@@ -15,7 +15,7 @@ class Solution:
                 st.pop()
             elif len(st) > 0 and char == '}' and st[-1] == '{':
                 st.pop()
-            else:
-                return False
+            # else:
+            #     return False
 
         return len(st) == 0
