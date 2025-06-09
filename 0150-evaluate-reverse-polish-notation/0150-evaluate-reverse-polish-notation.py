@@ -1,34 +1,36 @@
 class Solution:
-    def evalRPN(self, tokens: List[str]) -> int:         
+    def evalRPN(self, tokens: List[str]) -> int:
+        # duplicate consecutive operators
+        # one item in tokens
+        if len(tokens) == 1:
+            return int(tokens[0])
+
         stack = []
-        validOps = {'+', '-', '*', '/'}
+        operators = {'+', '-', '*', '/'}
 
-        for token in tokens:
-            if token not in validOps:
-                stack.append(int(token))
-            elif token in validOps:
-                numTop = stack.pop()
-                numBot = stack.pop()
-                res = None
-                print(stack)
-                if token == '+':
-                    res = numBot + numTop
-                elif token == '-':
-                    res = numBot - numTop
-                elif token == '*':
-                    res = numBot * numTop
-                elif token == '/':
-                    res = int(numBot / numTop)
-                stack.append(res)     
+        for i in range(len(tokens)):
+            # take top operand top - 1
+            char = tokens[i]
+            if char not in operators:
+                stack.append(int(char))
+            else:
+                if len(stack) >= 2:
 
-# for each token:
-#     if token is number:
-#         push to stack
-#     else:  # it's an operator
-#         pop two numbers
-#         calculate result
-#         push result back
-# return stack[0]
+
+                    top = stack.pop()
+                    bot = stack.pop()
+
+                    if char == '+':
+                        stack.append(bot + top)
+                    elif char == '-':
+                        stack.append(bot - top)
+                    elif char == '*':
+                        stack.append(bot * top)
+                    elif char == '/' and top != 0:
+                        stack.append(int(bot / top))
+                    elif char == '/' and top == 0:
+                        print('division by 0 invalid')
+        
         return stack[-1]
 
-# bottom - top
+        
