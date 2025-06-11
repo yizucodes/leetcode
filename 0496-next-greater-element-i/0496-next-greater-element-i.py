@@ -1,20 +1,18 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        next_greater = {}
+        ans = []
         stack = []
-        res = []
+        next_greater = {}
 
         for num in nums2:
             while stack and num > stack[-1]:
-                smaller = stack.pop()
-                # map number to 1
-                # index of nums1 of number of nums2
-                next_greater[smaller] = num
+                popped_num = stack.pop()
+                next_greater[popped_num] = num
             stack.append(num)
+        
+        # Populate answer
+        for i in range(len(nums1)):
+            ans.append(next_greater.get(nums1[i], -1))
 
-        for num in nums1:
-            res.append(next_greater.get(num, -1))
-
-
-        return res
+        return ans
         
