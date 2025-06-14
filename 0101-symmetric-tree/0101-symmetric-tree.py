@@ -6,33 +6,22 @@
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        # helper isMirror
+        def isMirror(left, right):
 
-        def isMirror(s, t):
-            # Handle case where both nodes are None
-            if s is None and t is None:
+            # if left and right are both none return True
+            if left is None and right is None:
                 return True
-            
-            # Handle case where only one node is None
-            if s is None or t is None:
-                return False
-            
-            # Check if the current node values match
-            if s.val != t.val:
-                return False
-            
-            # Recursively check if left subtree of s mirrors right subtree of t
-            if not isMirror(s.left, t.right):
-                return False
-            
-            # Recursively check if right subtree of s mirrors left subtree of t
-            if not isMirror(s.right, t.left):
-                return False
-            
-            # If all checks passed, trees are mirrors)
-            return True
 
-        
+            # if left OR right one of them is None return False
+            if left is None or right is None:
+                return False
+
+            # if left value is not same as right value return False
+            if left.val != right.val:
+                return False
+
+            # recurse for left and right AND right and left nodes
+            return isMirror(left.left, right.right) and isMirror(left.right, right.left)
+
         return isMirror(root.left, root.right)
-
-
-
