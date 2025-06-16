@@ -32,8 +32,6 @@ class Solution:
             
             # returning height
             return max(left, right) + 1
-        # if root is None:
-        #     return True
 
         return dfs(root) != -1
             
