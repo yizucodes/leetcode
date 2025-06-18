@@ -1,8 +1,8 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         # one number case
-        if len(nums) == 1 and nums[0] == target:
-            return 0
+        # if len(nums) == 1 and nums[0] == target:
+        #     return 0
 
         l = 0
         r = len(nums) - 1
