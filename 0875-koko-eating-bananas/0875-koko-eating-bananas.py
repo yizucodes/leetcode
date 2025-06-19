@@ -1,20 +1,30 @@
+from math import ceil
+
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        def k_works(k):
+        # calculate hours
+
+        def hours_needed(piles, k):
             hours = 0
-            for p in piles:
-                hours += ceil(p / k)
-            
-            return hours <= h
-        
+            for pile in piles:
+                hours += ceil(pile / k)
+
+            return hours
+
         l = 1
         r = max(piles)
-        
+
         while l < r:
-            k = (l+r) // 2
-            if k_works(k):
-                r = k
+            # Try a speed in the middle
+            m = (l + r) // 2
+            hoursNeeded = hours_needed(piles, m)
+
+            # If that speed is too slow (takes > h hours): try faster speeds
+            if hoursNeeded > h:
+                l = m + 1
+            # If that speed works (takes ≤ h hours): try slower speeds (looking for minimum)
             else:
-                l = k + 1
+                r = m
+
         
         return l
