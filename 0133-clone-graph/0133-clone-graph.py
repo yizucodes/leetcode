@@ -24,12 +24,17 @@ class Solution:
 
 
         def dfs(original):
-            cloned = Node(original.val)
+         
             if original not in visited:
+                cloned = Node(original.val)
                 # update mapping
                 visited[original] = cloned
                 for nei in original.neighbors:
-                    dfs(nei)
+                    cloned_neighbor = dfs(nei)
+                    cloned.neighbors.append(cloned_neighbor)
+
+            else:
+                return visited[original]
 
             return cloned
         
