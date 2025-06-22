@@ -8,10 +8,10 @@ class Solution:
 
             # base case: out of bounds
             if r < 0 or r >= rows or c < 0 or c >= cols: 
-                return 0
+                return
             # base case: water or visited
             if grid[r][c] == 0:
-                return 0
+                return
 
             # mark land as 0 to count as visited
             grid[r][c] = 0
@@ -31,8 +31,6 @@ class Solution:
             return 1 + aUp + aDown + aLeft + aRight
 
 
-
-            
         # find islands
         for row in range(rows):
             for col in range(cols):
