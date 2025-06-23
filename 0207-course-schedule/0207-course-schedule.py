@@ -5,10 +5,6 @@ class Solution:
             return True
 
         visited = set()
-
-        # Then: For each course, start DFS to check for cycles
-        # In DFS: Follow the prerequisite chains
-
         def dfs(pr):
 
             # base case if there if couse is visited
@@ -21,7 +17,8 @@ class Solution:
             # add to visited set
             visited.add(pr)
 
-            for pre in adjList[pr]:
+            # Checks if path to complete prereq course can be completed
+            for pre in adjList[pr]
                 if not dfs(pre): return False
 
 
@@ -33,7 +30,6 @@ class Solution:
             return True
 
         # Build adjacency list first - {course: [list of prerequisites]}
-        # Example: [[1,0], [0,1]] should become {1: [0], 0: [1]}
         adjList = {}
 
         # Initialize empty lists for all courses
