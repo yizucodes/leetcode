@@ -1,6 +1,9 @@
 from collections import deque
 class Solution:
     def maxDistance(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return -1
+
         q = deque()
         ROWS, COLS = len(grid), len(grid[0])
 
@@ -9,6 +12,10 @@ class Solution:
             for c in range(COLS):
                 if grid[r][c] == 1:
                     q.append((r, c))
+
+        # Handle edge case: if no water cells exist, return -1
+        if len(q) == 0 or len(q) == ROWS * COLS:
+            return -1
 
         # BFS Phase - spreading distance from all land cells simultaneously
     
@@ -28,10 +35,10 @@ class Solution:
             # Process exactly that many cells (one complete distance level)
             for _ in range(size):
                 # Take one land cell from front of queue
+                r, c = q.popleft()
            
                 # Check all 4 neighbors of this land cell
                 for dr, dc in directions:
-                    r, c = q.popleft()
 
                     # Calculate neighbor coordinates
                     new_r, new_c = r + dr, c + dc
@@ -50,10 +57,6 @@ class Solution:
             if q:
                 dist += 1
      
-        # Handle edge case: if no water cells exist, return -1
-
-
-
         # Return the final distance (furthest water from any land)
         return dist
        
