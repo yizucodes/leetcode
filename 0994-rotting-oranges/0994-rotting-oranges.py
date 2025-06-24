@@ -18,10 +18,6 @@ class Solution:
                 elif cell == 1:
                     fresh_count += 1
 
-        print(f"Initial queue: {list(queue)}")  # DEBUG
-        print(f"Initial fresh_count: {fresh_count}")  # DEBUG
-        print(f"Queue empty? {len(queue) == 0}")  # DEBUG
-
         # Step 2.5: Handle edge case
         if fresh_count == 0:
             return 0
@@ -54,11 +50,6 @@ class Solution:
                 mins += 1
         
         # Step 4: Final check and return
-        print(f"Final grid state:")  # DEBUG
-        for row in grid:
-            print(row)
-        print(f"Final fresh_count: {fresh_count}")  # DEBUG
-        
         if fresh_count == 0:
             return mins
         else:
