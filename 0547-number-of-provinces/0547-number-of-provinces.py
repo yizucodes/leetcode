@@ -1,31 +1,30 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        visited = set()
+        # if one item then 1 province
         numP = 0
+        visited = set()
 
-        # if not visited start province
+        # dfs
         def dfs(city):
-
-            "Mark the current city as visited so I remember I've been here"
+            # base case: visited city
+            if city in visited:
+                return
+            
+            # mark city as visited
             visited.add(city)
 
-            "Start looking at every single city that exists in the whole map"
+            # check for connected cities
+            # if connected, do dfs on that connected city
             for other in range(len(isConnected)):
-                # Is there a direct road between my current city and this other city?
                 if isConnected[city][other] == 1:
-                    "If I found a connection, then check if I've already visited that connected city before"
                     if other not in visited:
                         dfs(other)
-                    "If there's a connection AND I haven't been there yet, then go visit that city and repeat this whole process from there"
 
-        # loop through cities
+        # traverse every component with dfs
         for city in range(len(isConnected)):
             if city not in visited:
                 numP += 1
                 dfs(city)
-
-       
-
-
-        # count provinces
+            
         return numP
+
