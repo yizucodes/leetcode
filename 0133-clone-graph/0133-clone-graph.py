@@ -12,16 +12,8 @@ class Solution:
         # empty graph return
         if not node:
             return
-
+            
         visited = {}
-
-        
-# Better logic:
-# 1. Check if already cloned
-# 2. If not, create clone and store mapping
-# 3. Process neighbors and connect them
-
-
 
         def dfs(original):
          
