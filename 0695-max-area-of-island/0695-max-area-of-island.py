@@ -8,10 +8,10 @@ class Solution:
 
             # base case: out of bounds
             if r < 0 or r >= rows or c < 0 or c >= cols: 
-                return
+                return 0
             # base case: water or visited
             if grid[r][c] == 0:
-                return
+                return 0
 
             # mark land as 0 to count as visited
             grid[r][c] = 0
