@@ -25,8 +25,8 @@ class Solution:
             visiting.add(crs)
             
             # Check all prerequisites for this course
-            for prereq in adjList.get(crs, []):
-                if not dfs(prereq):  # If any prereq has a cycle
+            for prereq in adjList[crs]:
+                if not dfs(prereq):
                     return False
                     
             # Done visiting this course - remove from visiting, add to visited
@@ -41,5 +41,4 @@ class Solution:
                 return False
                 
         return True
-
 
