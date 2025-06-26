@@ -17,8 +17,7 @@ class Solution:
             # add to visited set
             visited.add(pr)
 
-            # Checks if path to complete prereq course can be completed
-            for pre in adjList[pr]
+            for pre in adjList[pr]: # I AM NOT SURE WHAT THIS LINE IS DOING?
                 if not dfs(pre): return False
 
 
@@ -40,6 +39,7 @@ class Solution:
         for course, prereq in prerequisites:
             adjList[course].append(prereq)
 
+        # Checks all courses for cycles
         for crs in range(numCourses):
             if not dfs(crs): return False
 
