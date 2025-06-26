@@ -25,9 +25,10 @@ class Solution:
             visiting.add(crs)
             
             # Check all prerequisites for this course
-            for prereq in adjList[crs]:
-                if not dfs(prereq):
-                    return False
+            if crs in adjList:
+                for prereq in adjList[crs]:
+                    if not dfs(prereq):
+                        return False
                     
             # Done visiting this course - remove from visiting, add to visited
             visiting.remove(crs)
