@@ -1,48 +1,45 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # if no prereqs then return True
-        if not prerequisites:
-            return True
-
-        visited = set()
-        def dfs(pr):
-
-            # base case if there if couse is visited
-            if pr in visited:
-                return False
-            
-            if adjList[pr] == []:
-                return True
-
-            # add to visited set
-            visited.add(pr)
-
-            for pre in adjList[pr]: # I AM NOT SURE WHAT THIS LINE IS DOING?
-                if not dfs(pre): return False
-
-
-            # remove from set after checking
-            visited.remove(pr)
-            
-            # assign value to [] as it's being visited
-            adjList[pr] = []
-            return True
-
-        # Build adjacency list first - {course: [list of prerequisites]}
-        adjList = {}
-
-        # Initialize empty lists for all courses
-        for i in range(numCourses):
-            adjList[i] = []
-
-        # Add prerequisites 
+    # Build adjacency list
+        adjList = {}  # or use defaultdict(list)
         for course, prereq in prerequisites:
+            # This means: to take 'course', I need to first take all courses in adjList[course]
+            if course not in adjList:
+                adjList[course] = []
             adjList[course].append(prereq)
-
-        # Checks all courses for cycles
-        for crs in range(numCourses):
-            if not dfs(crs): return False
-
+            
+        # Two separate tracking structures:
+        visiting = set()  # Currently in the DFS path (gray nodes)
+        visited = set()   # Completely done with DFS (black nodes)
+    
+        def dfs(crs):
+            # If we're currently visiting this course, we found a cycle!
+            if crs in visiting:
+                return False
+                
+            # If we already completely processed this course, it's safe
+            if crs in visited:
+                return True
+                
+            # Mark as currently visiting
+            visiting.add(crs)
+            
+            # Check all prerequisites for this course
+            for prereq in adjList.get(crs, []):
+                if not dfs(prereq):  # If any prereq has a cycle
+                    return False
+                    
+            # Done visiting this course - remove from visiting, add to visited
+            visiting.remove(crs)
+            visited.add(crs)
+            
+            return True
+    
+        # Check every course (some might not be connected)
+        for course in range(numCourses):
+            if not dfs(course):
+                return False
+                
         return True
 
 
