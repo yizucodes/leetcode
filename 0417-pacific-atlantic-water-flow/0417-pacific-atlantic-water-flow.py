@@ -1,82 +1,79 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        # ### **Step 1: Set Up Your Data Structures**
-        # - Create two sets (or boolean grids) to track which cells each ocean can reach
-        # - One for Pacific-reachable cells
-        # - One for Atlantic-reachable cells
-        pac = set()
+
+        """
+        Start from the ocean edges
+        Pacific: top row + left column
+        Atlantic: bottom row + right column
+
+
+        The ONE rule for traversal:
+
+        Can only move to neighbors with height ≥ current height
+        (Going "uphill" or flat from the ocean)
+
+
+        Find cells reached by BOTH
+
+        Whatever cells both DFS traversals visit = your answer
+        
+        """
+
+        rows, cols = len(heights), len(heights[0])
         atl = set()
+        pac = set()
 
-        # ### **Step 2: Find Pacific Edge Cells**
-        # - Pacific ocean touches the TOP row and LEFT column
-        # - For every cell in the top row: start DFS from there
-        # - For every cell in the left column: start DFS from there
-        ROWS, COLS = len(heights), len(heights[0])
+        def dfs(r, c, visitedSet):
 
-        def dfs(r, c, visited, prevHeight):
-            # Step 1: Check if we should stop
-            # - Out of bounds?
-            # - Already visited this cell?
-            # - Height too low? (current height < prevHeight means water can't flow here)
+            # mark as visited
+            visitedSet.add((r, c))
 
-            if r < 0 or r >= ROWS or c < 0 or c >= COLS:
-                return
-            if (r, c) in visited:
-                return
-            if heights[r][c] < prevHeight:
-                return
+            # up, down, left, right
+            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
             
-            # Step 2: Mark this cell as reachable
-            visited.add((r, c))
-            
-            # Step 3: Try all 4 directions
-            dfs(r+1, c, visited, heights[r][c])  # down
-            dfs(r-1, c, visited, heights[r][c])  # up  
-            dfs(r, c+1, visited, heights[r][c])  # right
-            dfs(r, c-1, visited, heights[r][c])  # left
+            for dr, dc in directions:
+                newR = r + dr
+                newC = c + dc
 
-        # ### **Step 3: DFS from Pacific Edges**
-        # - For each Pacific edge cell, do DFS
-        # - Mark current cell as "Pacific-reachable"
-        # - Explore neighbors where water can flow TO (same or higher elevation)
-        # - Continue until you've marked all cells Pacific can reach
-        
-        # Top row: (0, 0), (0, 1), (0, 2), ... (0, COLS-1)
-        for col in range(COLS):
-            dfs(0, col, pac, heights[0][col])
+                # base case: boundary check
+                if newR < 0 or newR >= rows:
+                    continue
+                if newC < 0 or newC >= cols:
+                    continue
 
-        # Left column: (0, 0), (1, 0), (2, 0), ... (ROWS-1, 0)  
-        for row in range(ROWS):
-            dfs(row, 0, pac, heights[row][0])
+                # base case: visited
+                if (newR, newC) in visitedSet:
+                    continue
 
-        # ### **Step 4: Find Atlantic Edge Cells**  
-        # - Atlantic ocean touches the BOTTOM row and RIGHT column
-        # - For every cell in the bottom row: start DFS from there
-        # - For every cell in the right column: start DFS from there
+                # if neighbor >= curr
+                    # dfs neighbor
+                if heights[newR][newC] >= heights[r][c]:
+                    dfs(newR, newC, visitedSet)
 
-        # ### **Step 5: DFS from Atlantic Edges**
-        # - Same as Step 3, but mark cells as "Atlantic-reachable"
-        # - Flow to neighbors with same or higher elevation
+        # traverse for pac
+        # top left to right
+        for r in range(rows):
+            dfs(r, 0, pac)
+     
+        # up to down
+        for c in range(cols):
+            dfs(0, c, pac)
 
-        for col in range(COLS):
-            dfs(ROWS - 1, col, atl, heights[ROWS - 1][col])
-        
-        for row in range(ROWS):
-            dfs(row, COLS - 1, atl, heights[row][COLS - 1])
+        # traverse for atl
+        # right to left
+        for r in range(rows):
+            dfs(r, cols - 1, atl)
 
+        # down to up from last cell
+        for c in range(cols):
+            dfs(rows - 1, c, atl)
 
-        # ### **Step 6: Find the Intersection**
-        # - Loop through all cells in the grid
-        # - If a cell is marked as BOTH Pacific-reachable AND Atlantic-reachable
-        # - Add that cell's coordinates to your result list
+        # intersection of atl and pac set is answer
         res = []
 
-        for r in range(ROWS):
-            for c in range(COLS):
-                if (r, c) in atl and (r, c) in pac:
-                    res.append([r, c])
+        for atlR, atlC in atl:
+            for pacR, pacC in pac:
+                if (atlR, atlC) == (pacR, pacC):
+                    res.append([atlR, atlC])
 
         return res
-
-
-
