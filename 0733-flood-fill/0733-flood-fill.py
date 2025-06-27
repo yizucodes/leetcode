@@ -11,11 +11,11 @@ class Solution:
         
         def dfs(r, c):
 
-            # boundary checks
-            # if 0 < r or r >= rows:
-            #     return
-            # if 0 < c or c >= cols:
-            #     return 
+            # boundary checks # WHY IS THIS NOT WORKING?
+            if r < 0 or r >= rows:
+                return
+            if c < 0 or c >= cols:
+                return 
 
             # base case: startingColor same as cell color
             # return
@@ -29,8 +29,7 @@ class Solution:
             # dfs up, down, left and right
             for dr, dc in directions:
                 newR, newC = dr + r, dc + c
-                if 0 <= newR < rows and 0 <= newC < cols:
-                    dfs(newR, newC)
+                dfs(newR, newC)
 
         dfs(sr, sc)
         return image
