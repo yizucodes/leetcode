@@ -11,7 +11,7 @@ class Solution:
         
         def dfs(r, c):
 
-            # boundary checks # WHY IS THIS NOT WORKING?
+            # boundary checks
             if r < 0 or r >= rows:
                 return
             if c < 0 or c >= cols:
