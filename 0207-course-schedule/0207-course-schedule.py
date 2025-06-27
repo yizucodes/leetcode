@@ -24,7 +24,7 @@ class Solution:
             # Mark as currently visiting
             visiting.add(crs)
             
-            # Check all prerequisites for this course
+            # Check if any prerequisite has a cycle
             if crs in adjList:
                 for prereq in adjList[crs]:
                     if not dfs(prereq):
