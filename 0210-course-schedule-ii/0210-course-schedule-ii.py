@@ -36,7 +36,7 @@ class Solution:
         # visited
         for crs in range(numCourses):
             if not dfs(crs):
-                return p
+                return []
 
         return res
 
