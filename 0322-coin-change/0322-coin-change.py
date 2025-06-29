@@ -3,8 +3,7 @@ class Solution:
 
         memo = [-1] * (amount + 1)
 
-        # Think: "To make amount 7, I could use any of my coins as the last coin. Let me try each one and see which gives the minimum total."
-
+        # What's the minimum number of coins needed to make amount n
         def dp(n):
             # base case:
             if n == 0:
@@ -34,4 +33,3 @@ class Solution:
             return -1
         return result
 
-                
