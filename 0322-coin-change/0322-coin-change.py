@@ -1,8 +1,6 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        # if amount > all coins --> -1
 
-        # if amount 0 return 0
         memo = [-1] * (amount + 1)
 
         # Think: "To make amount 7, I could use any of my coins as the last coin. Let me try each one and see which gives the minimum total."
@@ -21,9 +19,9 @@ class Solution:
             # Try each coin in coins to see which gives min total
             minCoins = float('inf')
 
-    
             for coin in coins:
                 res = dp(n - coin)
+                # add 1 to count used coin
                 minCoins = min(minCoins, 1 + res)
             
             memo[n] = minCoins
