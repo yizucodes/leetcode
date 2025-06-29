@@ -1,35 +1,39 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-
+        # create a memo ar
         memo = [-1] * (amount + 1)
 
-        # What's the minimum number of coins needed to make amount n
+        # dp(n) # n is the amount and you are trying to minimize the number of coins to cover that amount by trying each coin in coins array
         def dp(n):
-            # base case:
+
+            # base case
+            # n == 0 return 0
             if n == 0:
                 return 0
-            # check
+
+            # n < 0 return infinity
             if n < 0:
                 return float('inf')
-            
+
+            # check if memoized value is there
             if memo[n] != -1:
-                return memo[n] 
+                return memo[n]
 
-            # Try each coin in coins to see which gives min total
-            minCoins = float('inf')
+            minCoin = float('inf')
 
+            # recurrence
             for coin in coins:
-                res = dp(n - coin)
-                # add 1 to count used coin
-                minCoins = min(minCoins, 1 + res)
+                minCoin = min(minCoin, 1 + dp(n - coin))
             
-            memo[n] = minCoins
+            # assign value from recurrence
+            memo[n] = minCoin
 
-            return minCoins
+            return minCoin
 
-        result = dp(amount)
+        mini = dp(amount)
 
-        if result == float('inf'):
+        if mini == float('inf'):
             return -1
-        return result
+
+        return mini
 
