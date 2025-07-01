@@ -14,7 +14,7 @@ class Solution:
             # reached leaf node
             # append the path to res
             if not node:
-                return ""
+                return
 
              # concatenate node.val to path string
             nodeVal = str(node.val)
@@ -26,6 +26,7 @@ class Solution:
 
             if not node.left and not node.right:
                 res.append(path)
+
 
             # call dfs on update path string on left and right subtree
             dfs(node.left, path)
