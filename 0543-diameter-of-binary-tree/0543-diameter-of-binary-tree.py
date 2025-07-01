@@ -4,27 +4,31 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        # 1 node then return 1
         
-        # dfs
+        # longest number of edge in entire tree
+        maxD = 0
+
         def dfs(node):
-            nonlocal diameter
-            if node is None:
+            nonlocal maxD
+            if not node:
                 return 0
-                
-            # calculate depth for each side of tree
+            
+            # calculate left height
             left = dfs(node.left)
             right = dfs(node.right)
+            
+            currD = left + right
 
-            # calc max
-            diameter = max(left + right, diameter)
-
-            # returns height of tree to be used by parent node to calculate diameter
-            return max(left, right) + 1
-
-        diameter = 0
-        dfs(root)
-
-        return diameter
+            # find max of height
+            maxD = max(currD, maxD)
+            
+            # Do something with left and right
+            return 1 + max(left, right)
         
+        dfs(root)
+        return maxD
+
