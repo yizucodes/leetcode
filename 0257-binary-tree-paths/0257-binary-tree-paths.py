@@ -6,33 +6,30 @@
 #         self.right = right
 class Solution:
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
-        # one node return [str(root.val)]
-
-        # node -> node2
-
         res = []
-
+        # def dfs(node, path):
         def dfs(node, path):
 
+            # base case
+            # reached leaf node
+            # append the path to res
             if not node:
-                return
-            
-            if not path:
-                path = str(node.val)
+                return ""
+
+             # concatenate node.val to path string
+            nodeVal = str(node.val)
+        
+            if path == "":
+                path += nodeVal
             else:
-                # Add current node to path
-                path = path + '->' + str(node.val)
-            
-            # If leaf: add complete path to result
+                path = path + '->' + nodeVal
+
             if not node.left and not node.right:
                 res.append(path)
-            # If not leaf: recurse on children
-            else:
-                dfs(node.left, path)
-                dfs(node.right, path)
 
-            return res
-        
-        return dfs(root, "")
+            # call dfs on update path string on left and right subtree
+            dfs(node.left, path)
+            dfs(node.right, path)
 
-
+        dfs(root, "")
+        return res
