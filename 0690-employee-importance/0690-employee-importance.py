@@ -10,34 +10,28 @@ class Employee:
 class Solution:
     def getImportance(self, employees: List['Employee'], id: int) -> int:
 
+        # map first employees { id: importance }
         empMap = {}
 
-        # build employee map
-        # id : Employee object (not just importance!)
         for emp in employees:
             empMap[emp.id] = emp
+        res = 0
 
-        # recursively find the sum:
-        # - get employee by id
-        # - add their importance
-        # - recursively sum all subordinates
+        def dfs(targetId):
 
-    
-        def dfs(empId):
-            total = 0
-            importance = empMap[empId].importance
-            subordinates =  empMap[empId].subordinates
+            nonlocal res
+            # base case: id not in empMap return
+            if targetId not in empMap:
+                return
 
-            # add importance
-            total += importance
+            # lookup employee in lookup table
 
-            # sum subordinates
-            for subId in subordinates:
-                total += dfs(subId)
-                
+            # sum its importance 
+            res = res + empMap[targetId].importance
 
-            return total
-
-
-        return dfs(id)
-
+            # sum importance for each subordinates
+            for subId in empMap[targetId].subordinates:
+                dfs(subId)
+            
+        dfs(id)
+        return res
