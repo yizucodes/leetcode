@@ -11,6 +11,7 @@ class Solution:
         self.res = None
         
         def dfs(node):
+            # if node not found or found a result then stop dfs
             if not node or self.res:
                 return
             
