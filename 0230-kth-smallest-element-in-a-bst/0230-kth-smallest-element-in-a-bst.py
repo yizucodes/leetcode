@@ -19,7 +19,7 @@ class Solution:
             self.count += 1
             if k == self.count:
                 self.res = node.val
-                return # why does this get returned to call stack?
+                return
             dfs(node.right)
 
         dfs(root)
