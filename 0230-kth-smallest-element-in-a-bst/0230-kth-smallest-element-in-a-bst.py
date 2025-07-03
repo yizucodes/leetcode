@@ -11,14 +11,14 @@ class Solution:
         self.res = None
         
         def dfs(node):
-            if not node:
+            if not node or self.res:
                 return
             
             dfs(node.left)
             self.count += 1
             if k == self.count:
                 self.res = node.val
-                return
+                return # why does this get returned to call stack?
             dfs(node.right)
 
         dfs(root)
