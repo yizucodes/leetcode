@@ -12,7 +12,7 @@ class Solution:
         
         def dfs(node):
             # if node not found or found a result then stop dfs
-            if not node:
+            if not node or self.res:
                 return
             
             dfs(node.left)
