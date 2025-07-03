@@ -8,16 +8,18 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         
-        # lca on the left
-        if p.val < root.val and q.val < root.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-
-        # lca on the right
-        if p.val > root.val and q.val > root.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-
-        # split point, current node is the lca
-        else:
-            return root
+        curr = root
+        # if curr value is greater and p and q then go left
+        while curr:
+            if curr.val > p.val and curr.val > q.val:
+                curr = curr.left
+            # if curr value is less than p.val and q.val then go right
+            elif curr.val < p.val and curr.val < q.val:
+                curr = curr.right
+            # else found lca
+            else:
+                return curr
+     
+        
 
         
