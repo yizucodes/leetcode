@@ -19,7 +19,7 @@ class Solution:
             self.count += 1
             if k == self.count:
                 self.res = node.val
-                return
+                # return
             dfs(node.right)
 
         dfs(root)
