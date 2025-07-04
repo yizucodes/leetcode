@@ -4,8 +4,6 @@ class Solution:
         if not prerequisites:
             return True
         
-        # whenever there is a cycle return false
-        
         # build adjList courses --> prerequisites
         adjList = defaultdict(list)
 
@@ -40,7 +38,7 @@ class Solution:
 
 
         # traverse courses
-        for crs in range(numCourses):
+        for crs in range(numCourses): 
             if not dfs(crs):
                 return False
 
