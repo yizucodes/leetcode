@@ -1,45 +1,47 @@
+from collections import defaultdict
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-    # Build adjacency list
-        adjList = {}  # or use defaultdict(list)
-        for course, prereq in prerequisites:
-            # This means: to take 'course', I need to first take all courses in adjList[course]
-            if course not in adjList:
-                adjList[course] = []
-            adjList[course].append(prereq)
-            
-        # Two separate tracking structures:
-        visiting = set()  # Currently in the DFS path (gray nodes)
-        visited = set()   # Completely done with DFS (black nodes)
-    
+        if not prerequisites:
+            return True
+        
+        adjList = defaultdict(list)
+        # adjList
+        for crs, nei in prerequisites:
+            adjList[crs].append(nei)
+
+        processing = set()
+        visited = set()
+
+        # dfs
         def dfs(crs):
-            # If we're currently visiting this course, we found a cycle!
-            if crs in visiting:
+            
+            # if crs in processing --> cycle false
+            if crs in processing:
                 return False
-                
-            # If we already completely processed this course, it's safe
+            # if crs in visited --> already processing true
             if crs in visited:
                 return True
-                
-            # Mark as currently visiting
-            visiting.add(crs)
+
+            # add crs to processing
+            processing.add(crs)
+
+            # traverse neighbors if any neighbor returns True 
+            # if any neighbor returns False --> cycle so return False
+            for nei in adjList[crs]:
+                if not dfs(nei):
+                    return False
             
-            # Check if any prerequisite has a cycle
-            if crs in adjList:
-                for prereq in adjList[crs]:
-                    if not dfs(prereq):
-                        return False
-                    
-            # Done visiting this course - remove from visiting, add to visited
-            visiting.remove(crs)
+            # remove from processing
+            processing.remove(crs)
+
+            # add to visited
             visited.add(crs)
-            
             return True
-    
-        # Check every course (some might not be connected)
+
+        # traverse courses --> if one course has a cycle return False
         for course in range(numCourses):
             if not dfs(course):
                 return False
-                
-        return True
 
+        return True
