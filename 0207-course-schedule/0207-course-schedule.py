@@ -1,47 +1,48 @@
 from collections import defaultdict
-
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         if not prerequisites:
             return True
         
+        # whenever there is a cycle return false
+        
+        # build adjList courses --> prerequisites
         adjList = defaultdict(list)
-        # adjList
-        for crs, nei in prerequisites:
-            adjList[crs].append(nei)
 
-        processing = set()
+        for crs, pr in prerequisites:
+            adjList[crs].append(pr)
+
         visited = set()
+        processing = set()
 
-        # dfs
         def dfs(crs):
             
-            # if crs in processing --> cycle false
+            # cycle
             if crs in processing:
                 return False
-            # if crs in visited --> already processing true
+            
+            # already visited
             if crs in visited:
                 return True
 
-            # add crs to processing
+            # processing
             processing.add(crs)
 
-            # traverse neighbors if any neighbor returns True 
-            # if any neighbor returns False --> cycle so return False
-            for nei in adjList[crs]:
-                if not dfs(nei):
+            # dfs on each prereq
+            for prereq in adjList[crs]:
+                if not dfs(prereq):
                     return False
             
-            # remove from processing
             processing.remove(crs)
-
-            # add to visited
             visited.add(crs)
+
             return True
 
-        # traverse courses --> if one course has a cycle return False
-        for course in range(numCourses):
-            if not dfs(course):
+
+        # traverse courses
+        for crs in range(numCourses):
+            if not dfs(crs):
                 return False
 
+        
         return True
