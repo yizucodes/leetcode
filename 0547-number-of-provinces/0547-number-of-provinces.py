@@ -8,7 +8,7 @@ class Solution:
         def dfs(city):
             # base case: visited city
             if city in visited:
-                return
+                return []
             
             # mark city as visited
             visited.add(city)
