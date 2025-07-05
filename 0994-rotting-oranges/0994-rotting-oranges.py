@@ -1,66 +1,55 @@
 from collections import deque
-
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
+        # if thre is fresh oranges --> return -1
+        # if all oranges are rotten --> 0
 
-        rows, cols = len(grid), len(grid[0])
+        # all empty cells --> 0
+
         q = deque()
+        res = 0
+        
+        ROWS, COLS = len(grid), len(grid[0])
         fresh = 0
-        time = 0
+        # unreacheable fresh --> -1
 
-        # add to queue for target so rotten ones
-        for r in range(rows):
-            for c in range(cols):
+        # find all the cells that have rotten 2
+        for r in range(ROWS):
+            for c in range(COLS):
                 if grid[r][c] == 2:
                     q.append((r, c))
                 elif grid[r][c] == 1:
                     fresh += 1
-        
-        if fresh == 0:    # No fresh oranges (including no oranges at all)
-            return 0
-        if len(q) == 0:   # Fresh oranges exist but no rotten ones
-            return -1
-
-        # left, right, up, down,
-        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
-
-        # bfs
-        while q:
-            size = len(q)
-            rotted = False
-        
-            # process each element in the queue
-            for _ in range(size):
-                
-                r, c = q.popleft()
-              
-                # find neighbor coordinates
-                for dr, dc in directions:
-                    newR, newC = r + dr, c + dc
-
-                    # check for boundary and if meet 1  
-                    isValid = 0 <= newR < rows and 0 <= newC < cols and grid[newR][newC] == 1
-
-                    if isValid:
-                        rotted = True
-                        # mark rotten
-                        grid[newR][newC] = 2
-                        # add rotten to queue for next level processing
-                        q.append((newR, newC))
-                        # fresh -= 1
-                        fresh -= 1
-                
-            # after each level time += 1
-            if rotted:
-                time += 1
-
     
-        if fresh == 0:
-            return time
-        # isolated fresh orange or all oranges are rotten
-        else:
-            return -1
+        # edge case
+
+        # traverse level by level
 
 
+        directions = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+        while q and fresh > 0:
+            for _ in range(len(q)):  # Process one level
+                r, c = q.popleft()
+                # Check 4 directions
+                # If fresh orange found:
+                #   - Make it rotten
+                #   - Add to queue
+                #   - Decrease fresh count
 
+                for dr, dc in directions:
+                    newR, newC = dr + r, dc + c
+                # check boundaries
+                    if (0 <= newR < ROWS and 0 <= newC < COLS and grid[newR][newC] == 1):
+                        grid[newR][newC] = 2
+                        q.append((newR, newC))
+                        fresh -= 1
+            
+            res += 1  # Increment time after each level
+
+        # After while loop:
+        if fresh > 0:
+            return -1  # Unreachable fresh oranges
+        return res
+
+        
 
