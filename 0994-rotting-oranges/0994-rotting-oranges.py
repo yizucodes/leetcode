@@ -7,7 +7,7 @@ class Solution:
         # all empty cells --> 0
 
         q = deque()
-        res = 0
+        time = 0
         
         ROWS, COLS = len(grid), len(grid[0])
         fresh = 0
@@ -20,11 +20,6 @@ class Solution:
                     q.append((r, c))
                 elif grid[r][c] == 1:
                     fresh += 1
-    
-        # edge case
-
-        # traverse level by level
-
 
         directions = [(1, 0), (-1, 0), (0, -1), (0, 1)]
         while q and fresh > 0:
@@ -43,13 +38,13 @@ class Solution:
                         grid[newR][newC] = 2
                         q.append((newR, newC))
                         fresh -= 1
-            
-            res += 1  # Increment time after each level
+            # Increment time after each level
+            time += 1  
 
         # After while loop:
         if fresh > 0:
             return -1  # Unreachable fresh oranges
-        return res
+        return time
 
         
 
