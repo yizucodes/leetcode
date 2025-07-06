@@ -1,24 +1,31 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        if len(intervals) <= 1:
-            return intervals
+        # Step 1: Sort intervals by their start time
+        # This ensures we process intervals in chronological order
+        # Example: [[2,6],[1,3],[8,10]] becomes [[1,3],[2,6],[8,10]]
+        intervals.sort(key = lambda i : i[0])
         
-        merged = []
+        # Step 2: Initialize output with the first interval
+        # We'll build our result by comparing each interval with the last merged interval
+        output = [intervals[0]]
 
-        # Sort the intervals by their start times
-        intervals.sort(key=lambda x: x[0])
+        # Step 3: Iterate through remaining intervals starting from index 1
+        for start, end in intervals[1:]:
+            # Get the end time of the most recently added interval in our output
+            lastEnd = output[-1][1]
 
-        for interval in intervals:
-        
-            if len(merged) == 0 or merged[-1][1] < interval[0]:
-                # how to access interval + 1, next array?
-                merged.append(interval)
+            # Step 4: Check if current interval overlaps with the last interval in output
+            # Overlap occurs when: current_start <= last_end
+            # Example: [1,3] and [2,6] overlap because 2 <= 3
+            if start <= lastEnd:
+                # Merge intervals by extending the end time of the last interval
+                # Take the maximum end time to cover both intervals completely
+                # Example: merge [1,3] and [2,6] -> [1,6] (max(3,6) = 6)
+                output[-1][1] = max(lastEnd, end)
             else:
-                # Overlap so merge intervals
-                mergedEnd = merged[-1][1]
-                endInterval = interval[1]
-                merged[-1][1] = max(mergedEnd, endInterval)
-        return merged
-               
-
+                # No overlap found - add current interval as a separate interval
+                # Example: [1,6] and [8,10] don't overlap (8 > 6)
+                output.append([start, end])
         
+        # Return the merged intervals
+        return output
