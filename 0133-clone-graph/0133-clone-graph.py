@@ -9,33 +9,37 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        # empty graph
         if not node:
             return None
+            
+        visited = {} # original with cloned   
 
-        # 1 node
-
-        # nodeMap { original: cloned }
-        nodeMap = {} 
-        
-            # dfs
+        # iterate through adjList
         def dfs(original):
-        # base case: visited already
-            if original in nodeMap:
-                return nodeMap[original]
+            if not original:
+                return
+            
+            # if cloned already --> return cloned version
+            if original in visited:
+                return visited[original]
 
-            # clone original node
+            # clone first node
             cloned = Node(original.val)
 
             # mark as visited
-            nodeMap[original] = cloned
+            visited[original] = cloned
 
-            # clone neighbors each
-            # attach neighbors to cloned node
-            for nei in original.neighbors:
-                clonedNei = dfs(nei)
-                cloned.neighbors.append(clonedNei)
-               
+            # clone each of the nodes neigh nodes 
+            # append cloned nei to list
+            if original.neighbors:
+                for nei in original.neighbors:
+                    clonedNei = dfs(nei)
+                    cloned.neighbors.append(clonedNei)
+                    
             return cloned
 
-        return dfs(node)
+
+
+        res = dfs(node)
+
+        return res
