@@ -1,37 +1,31 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()  # Sort the array to make it easier to find triplets and skip duplicates
         res = []
+        nums.sort()
 
-        # Iterate through the array
-        for i in range(len(nums) - 2):
-            # Skip duplicates for the first element
-            if i > 0 and nums[i] == nums[i - 1]:
+        # fix first number
+        for i, a in enumerate(nums):
+            if i > 0 and a == nums[i - 1]:
                 continue
+            # 2 pter for remaining
+            l, r = i + 1, len(nums) - 1
 
-            target = -nums[i]  # We need two numbers that sum to the negative of nums[i]
-            left, right = i + 1, len(nums) - 1  # Set two pointers
+            # 2 pter
+            while l < r:
+                treSum = a + nums[l] + nums[r]
 
-            while left < right:
-                currSum = nums[left] + nums[right]
-
-                if currSum == target:
-                    res.append([nums[i], nums[left], nums[right]])  # Found a valid triplet
-
-                    # Skip duplicates for the second number (left pointer)
-                    while left < right and nums[left] == nums[left + 1]:
-                        left += 1
-
-                    # Skip duplicates for the third number (right pointer)
-                    while left < right and nums[right] == nums[right - 1]:
-                        right -= 1
-
-                    # Move pointers inward to continue searching for new pairs
-                    left += 1
-                    right -= 1
-                elif currSum < target:
-                    left += 1  # We need a larger sum, so move the left pointer to the right
+                if treSum > 0:
+                    r -= 1
+                elif treSum < 0:
+                    l += 1
                 else:
-                    right -= 1  # We need a smaller sum, so move the right pointer to the left
+                    res.append([a, nums[l], nums[r]])
+                    l += 1
+                
+                # skip duplicates for second number
+                while nums[l] == nums[l - 1] and l < r:
+                    l += 1
 
         return res
+
+        
