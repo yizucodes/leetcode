@@ -7,7 +7,6 @@ class Solution:
         # Hint: Use defaultdict(list) so each signature automatically gets an empty list
         anagram_groups = defaultdict(list)
         
-        
         # Step 2: Process each word in the input array
         for word in strs:
             
@@ -24,20 +23,17 @@ class Solution:
         # Hint: Convert the dictionary values to a list
 
         return list(anagram_groups.values())
+"""
+Time Complexity: O(n * k log k)
+- n = number of strings in input
+- k = maximum length of any string (number of letters)
+- For each string: O(k log k) to sort + O(k) to join = O(k log k)
+- Total: n strings × O(k log k) = O(n * k log k)
 
-# Test your implementation:
-# Input: ["eat","tea","tan","ate","nat","bat"]
-# Expected Output: [["eat","tea","ate"],["tan","nat"],["bat"]]
-
-# Trace through example:
-# "eat" -> sorted = "aet" -> goes to bucket "aet"
-# "tea" -> sorted = "aet" -> goes to bucket "aet" 
-# "tan" -> sorted = "ant" -> goes to bucket "ant"
-# "ate" -> sorted = "aet" -> goes to bucket "aet"
-# "nat" -> sorted = "ant" -> goes to bucket "ant" 
-# "bat" -> sorted = "abt" -> goes to bucket "abt"
-
-# Final buckets:
-# "aet": ["eat", "tea", "ate"]
-# "ant": ["tan", "nat"] 
-# "abt": ["bat"]
+Space Complexity: O(n * k)
+- Dictionary storage: O(n) entries in worst case (all unique)
+- Each signature: O(k) space
+- Each value list: contains original strings O(k) each
+- Return list: O(n * k) total
+- Total: O(n * k)
+"""
