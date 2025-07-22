@@ -9,9 +9,9 @@ class Solution:
 
         # Step 2: Sort by frequency (somehow)
         # [(1, 3), (2, 2), (3, 1)]  # (element, frequency) pairs
-        mostCommon = numMap.most_common(k)
+        mostCommon = sorted(numMap.items(), key=lambda x: x[1], reverse=True)
 
         # Step 3: Take top k elements
         # Return [1, 2]
-        res = [element for element, freq in mostCommon]
+        res = [element for element, freq in mostCommon[:k]]
         return res
