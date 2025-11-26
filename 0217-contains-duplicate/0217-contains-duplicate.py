@@ -1,12 +1,12 @@
-from collections import Counter
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        # Counter
-        freqMap = Counter(nums)
+        freqMap = {}
 
-        for freq in freqMap.values():
-            # if any freq is > 1 return True
-            if freq > 1:
+        for num in nums:
+            if num in freqMap:
                 return True
+            freqMap[num] = 0
         
         return False
+
+        
