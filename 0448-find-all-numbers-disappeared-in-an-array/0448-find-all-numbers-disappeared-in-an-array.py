@@ -1,15 +1,9 @@
 class Solution:
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-
         numSet = set(nums)
 
-        res = []
-        numTrack = 1
+        # n == len of array
 
-        for i in range(len(nums)):
-            if numTrack not in numSet:
-                res.append(numTrack)
-            numTrack += 1
+        # check if number is in 
+        return [num for num in range(1, len(nums) + 1) if num not in numSet]
 
-        return res
-        
