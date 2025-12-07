@@ -1,16 +1,15 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        # one element -> false
-        freqMap = {}
+        # frequency of each number
+        numFreq = {}
+
         for num in nums:
-            # in map return True
-            if num in freqMap:
+            if num in numFreq:
                 return True
-
-            # add to map
-            freqMap[num] = 1
-
+            numFreq[num] = 1
         
         return False
-            
+
+
+      
         
