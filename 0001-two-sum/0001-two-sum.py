@@ -1,16 +1,18 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        
         numMap = {}
-        # store complement (target - num): index
-
+        
         for i in range(len(nums)):
-            complement = target - nums[i]
+            num = nums[i]
+            if num in numMap:
+                return [i, numMap[num]]
+            # calc comp and store the current index
+            complement = target - num
+            numMap[complement] = i
 
-            # if there is complement
-            if nums[i] in numMap:
-                return [i, numMap[nums[i]]]
-            # no pair
-            else:
-                # why is it that you numMap[nums[i]] = i?
-                numMap[complement] = i 
         return []
+
+
+
+        
