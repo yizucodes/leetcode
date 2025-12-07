@@ -5,7 +5,7 @@ class Solution:
         # num: freq with Counter
         numFreq = Counter(nums)
 
-        # create array of { num: freq }  - list comprehension
+        # list comprehension to return the keys of the most common k values
         return [num for num, _ in numFreq.most_common(k)]
 
 
