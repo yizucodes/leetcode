@@ -1,25 +1,19 @@
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
-
-        left = 0
-        right = k
-
-        runningSum = sum(nums[:k])
-        maxAve = runningSum / k
-
+        if len(nums) == 1 and k == 1:
+            return nums[0]
         
-        while right < len(nums):
-            
-            runningSum = runningSum - nums[left] + nums[right]
+        # winSum
+        winSum = sum(nums[:k])
+        # maxSum
+        maxSum = winSum
 
-            # calculate the ave
-            currAve = runningSum / k
+        # traverse array from k to len(nums)
+        for r in range(k, len(nums)):
+            # calc winSum by subracting the leftmost element, add the rightmost element
+            winSum = winSum - nums[r - k] + nums[r]
 
-            # take max btw current average and maxAve
-            maxAve = max(currAve, maxAve)
+            # maxSum calc
+            maxSum = max(maxSum, winSum)
 
-            # move left and right pter by 1
-            left += 1
-            right += 1
-
-        return maxAve
+        return maxSum / k
