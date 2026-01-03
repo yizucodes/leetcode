@@ -1,31 +1,32 @@
+# abcabcbb
+#  l 
+#    r
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-
-        if len(s) == 0:
+        # empty string
+        if not s:
             return 0
-        if len(s) == 1:
-            return 1
 
-        # init winSet, l
-        winSet = set()
+        # set to track chars in window
+        charSet = set()
+
+        maxLen = 0
         l = 0
 
-        # maxLen
-        maxLen = 0
-
-        # sliding window
+        # loop
         for r in range(len(s)):
-            
-            # shrink it when a letter in the window is in the set, shrink until there is no duplicate letters
-            while s[r] in winSet:
-                winSet.remove(s[l])
-                l += 1
-            
-            # check if current length (r - l + 1) > maxLen
-            if (r - l + 1) > maxLen:
-                maxLen = r - l + 1
 
-            # add newly added char to set
-            winSet.add(s[r])
+            # check if curr char creates duplicate
+            if s[r] in charSet:
+                # shrink window until no more duplicate
+                while s[r] in charSet:
+                    charSet.remove(s[l])
+                    l += 1
+                    
+            # add current char to set
+            charSet.add(s[r])
+
+            # max len
+            maxLen = max(r - l + 1, maxLen)
 
         return maxLen
