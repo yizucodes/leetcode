@@ -4,14 +4,22 @@ class Solution:
         r = len(numbers) - 1
 
         while l < r:
-            currSum = numbers[l] + numbers[r]
-
-            if currSum == target:
+            # if sum of l and r == target
+            if (numbers[l] + numbers[r]) == target:
                 return [l + 1, r + 1]
 
-            if currSum > target:
+            # if sum > target:
+            # move right pointer by 1 to the left
+            elif (numbers[l] + numbers[r]) > target:
                 r -= 1
+
+            # if sum < target:
+            # left pointer += 1
             else:
                 l += 1
-        
+
+        # no solution
         return []
+        
+        
+        
