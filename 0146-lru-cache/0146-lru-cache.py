@@ -24,6 +24,7 @@ class LRUCache:
         node.next = self.head.next
         self.head.next = node
         node.next.prev = node
+        
 
     def get(self, key: int) -> int:
         if key not in self.cache:
