@@ -1,80 +1,84 @@
 class Node:
-    def __init__(self, key = None, value = None):
+    def __init__(self, key = None, val = None):
         self.key = key
-        self.value = value
+        self.val = val
         self.prev = None
         self.next = None
 
 class LRUCache:
-
     def __init__(self, capacity: int):
-        self.cache = {}
         self.capacity = capacity
+        # cache
+        self.cache = {}
+
+        # head and tail
         self.head = Node()
-        self.tail = Node()   
+        self.tail = Node()
+        # connect them
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def _remove(self, node):
-        node.prev.next = node.next
         node.next.prev = node.prev
-    
-    def _add_to_front(self, node):
-        node.prev = self.head
-        node.next = self.head.next
-        self.head.next = node
-        node.next.prev = node
+        node.prev.next = node.next
         
+    def _add_to_front(self, node):
+        temp = self.head.next
+        self.head.next = node
+        node.prev = self.head
+        node.next = temp
+        temp.prev = node
 
     def get(self, key: int) -> int:
+        # key does not exist return -1
         if key not in self.cache:
-            return -1
-        # access node cache[key]
+            return - 1
+        
         node = self.cache[key]
 
-        # remove
+        # remove the node of the key
         self._remove(node)
 
-        # add node to the front
+        # move to the front
         self._add_to_front(node)
 
-        # return the value of the node
-        return node.value
+        # return the value
+        return node.val
 
     def put(self, key: int, value: int) -> None:
-        # key in cache
+        # key exists
         if key in self.cache:
 
-            # update the key and value
             node = self.cache[key]
 
-            # update node value
-            node.value = value
-
-            # remove node
+            node.val = value
+           
+            # remove node 
             self._remove(node)
-
-            # add to the front of the list
+            
+            # put to the fron
             self._add_to_front(node)
-
-        # else: key not cache
+        # does not exist
         else:
             # create new node
             node = Node(key, value)
-            # add to cache
+
+            # add to cache 
             self.cache[key] = node
-            # add to front
+
+            # put to front
             self._add_to_front(node)
 
-            # if capacity exceeded
+            # check for capacity
             if len(self.cache) > self.capacity:
+
                 lru_node = self.tail.prev
-                # remove the lru key which is the last node before tail
+                # remove last node before tail
                 self._remove(lru_node)
-                # remove from cache
+                
+                # delete from cache
                 del self.cache[lru_node.key]
-    
-        
+
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
