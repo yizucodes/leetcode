@@ -1,66 +1,56 @@
-
-
 class MyCircularQueue:
 
     def __init__(self, k: int):
-        self.q = k * [None]
-        self.size = 0
-        self.head = 0
-        self.tail = 0
+        self.q = [None] * k
         self.capacity = k
-        
-    # constant time
+        self.size = 0
+        self.front = 0
+        self.rear = 0
+
     def enQueue(self, value: int) -> bool:
         # check if full
-        if self.isFull(): return False
+        if self.size == self.capacity:
+            return False
 
-        # tail moves
-        tail = (self.head + self.size) % self.capacity
+        # append to q[rear]
+        self.q[self.rear] = value
 
-        # insert at head
-        self.q[tail] = value
+        # shift rear by 1
+        self.rear = (self.rear + 1) % self.capacity
+
+        # increase size
         self.size += 1
 
         return True
-
-    # constant time
+        
     def deQueue(self) -> bool:
-
         # check if empty
-        if self.isEmpty(): return False
-
-        # head moves
-        self.head = (self.head + 1) % self.capacity
-
-        # decrease size
+        if self.size == 0:
+            return False
+        
+        self.q[self.front] = None
         self.size -= 1
-
+        self.front = (self.front + 1) % self.capacity
         return True
 
-
-
-
     def Front(self) -> int:
-        # empty
-        if self.isEmpty(): return -1
-        return self.q[self.head]
+        if self.size == 0:
+            return -1
 
-    def Rear(self) -> int:
-        if self.isEmpty(): return -1
-        rear = (self.head + self.size - 1) % self.capacity
-        return self.q[rear]
-    
-    def isEmpty(self) -> bool:
-        if self.size == 0: return True
-        return False
+        return self.q[self.front]
         
+    def Rear(self) -> int:
+        if self.size == 0:
+            return -1
+
+        return self.q[self.rear - 1]
+        
+    def isEmpty(self) -> bool:
+        return self.size == 0
 
     def isFull(self) -> bool:
-        if self.size == self.capacity: return True
-        return False
+        return self.size == self.capacity
         
-
-
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)
 # param_1 = obj.enQueue(value)
