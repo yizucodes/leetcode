@@ -9,7 +9,7 @@ class Solution:
         heapq.heapify(max_heap)
 
         # pop k - 1 times
-        for num in range(k - 1):
+        for _ in range(k - 1):
             heapq.heappop(max_heap)
             
         return -max_heap[0]
