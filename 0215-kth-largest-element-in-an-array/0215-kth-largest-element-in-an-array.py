@@ -13,3 +13,7 @@ class Solution:
             heapq.heappop(max_heap)
             
         return -max_heap[0]
+
+# Complexity
+# Time: O(n + k log n)
+# Space: O(n)
