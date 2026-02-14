@@ -2,55 +2,63 @@ class MyCircularQueue:
 
     def __init__(self, k: int):
         self.q = [None] * k
-        self.capacity = k
         self.size = 0
         self.front = 0
-        self.rear = 0
+        self.tail = 0
 
     def enQueue(self, value: int) -> bool:
-        # check if full
-        if self.size == self.capacity:
+        # if at capacity --> return false
+        if self.isFull():
             return False
+        
+        # add to q
+        self.q[self.tail] = value
 
-        # append to q[rear]
-        self.q[self.rear] = value
+        # update tail
+        self.tail = (self.tail + 1) % len(self.q)
 
-        # shift rear by 1
-        self.rear = (self.rear + 1) % self.capacity
-
-        # increase size
         self.size += 1
 
         return True
         
+
     def deQueue(self) -> bool:
         # check if empty
-        if self.size == 0:
+        if self.isEmpty():
             return False
-        
+
+        # remove front
         self.q[self.front] = None
+
+        # wrap around
+        self.front = (self.front + 1) % len(self.q)
+
         self.size -= 1
-        self.front = (self.front + 1) % self.capacity
+
         return True
+        
 
     def Front(self) -> int:
-        if self.size == 0:
+        if self.isEmpty():
             return -1
 
         return self.q[self.front]
         
-    def Rear(self) -> int:
-        if self.size == 0:
-            return -1
 
-        return self.q[self.rear - 1]
+    def Rear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.q[self.tail - 1]
         
+
     def isEmpty(self) -> bool:
         return self.size == 0
-
-    def isFull(self) -> bool:
-        return self.size == self.capacity
         
+    def isFull(self) -> bool:
+        return self.size == len(self.q)
+        
+
+
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)
 # param_1 = obj.enQueue(value)
