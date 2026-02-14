@@ -3,39 +3,46 @@ import random
 class RandomizedSet:
 
     def __init__(self):
-        self.list = []
-        self.valToIndex = {}
+        self.data = []
+        # val: ind
+        self.map = {}
 
     def insert(self, val: int) -> bool:
-        if val in self.valToIndex:
+        # if present return False
+        if val in self.map:
             return False
-        self.list.append(val)
-        self.valToIndex[val] = len(self.list) - 1
+
+        # insert into list
+        self.data.append(val)
+
+        # add value to map
+        self.map[val] = len(self.data) - 1
+
         return True
-
+        
     def remove(self, val: int) -> bool:
-        if val not in self.valToIndex:
+        if val not in self.map:
             return False
 
-        lastEl = self.list[-1]
-        
-        indexVal = self.valToIndex[val]
-        self.valToIndex[lastEl] = indexVal
-        del self.valToIndex[val]
-        
-        # remove value
-        # swap index of last element with val
-        self.list[indexVal], self.list[-1] = self.list[-1], self.list[indexVal]
-        self.list.pop()
+        ind = self.map[val]
+
+        self.map[self.data[-1]] = ind 
+
+        # swap to end for value to remove
+        self.data[-1], self.data[ind] = self.data[ind], self.data[-1]
+
+        # pop
+        self.data.pop()
+
+        # delete from map
+        del self.map[val]
         return True
 
     def getRandom(self) -> int:
-        # random number from 0 to len(list) - 1
-        if not self.list:
-            return
-        randomIndex = random.randint(0, len(self.list) - 1)
-        return self.list[randomIndex]
-
+        # random index
+        randInd = random.randint(0, len(self.data) - 1)
+        return self.data[randInd]
+        
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()
 # param_1 = obj.insert(val)
