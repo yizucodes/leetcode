@@ -6,6 +6,7 @@ class Node:
         self.prev = None
 
 class LRUCache:
+
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = {}
@@ -14,61 +15,70 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.prev = self.head
 
-    # remove
-    def _remove_(self, node):
-        node.next.prev = node.prev
+        # remove
+    def _remove(self, node):
         node.prev.next = node.next
+        node.next.prev = node.prev
 
-    # add to front
+        # add to front
     def _add_to_front(self, node):
         temp = self.head.next
         self.head.next = node
-        temp.prev = node
-        node.next = temp
         node.prev = self.head
+        node.next = temp
+        temp.prev = node
+
         
     def get(self, key: int) -> int:
-        # if not key return -1
+        # if key not exists return -1
         if key not in self.cache:
             return -1
 
+        # node
         node = self.cache[key]
 
         # remove node
-        self._remove_(node)
+        self._remove(node)
 
-        # add to front
+        # add node to the front
         self._add_to_front(node)
 
+        # return node.val
         return node.val
-
+        
     def put(self, key: int, value: int) -> None:
-        # key exists case
+        # key exists
         if key in self.cache:
-            # update value of key
+
+            # access node
             node = self.cache[key]
+            # update value of the node
             node.val = value
-            self._remove_(node)
+            # remove node
+            self._remove(node)
+
+            # add to front
             self._add_to_front(node)
 
-        # key not exists
+        # key does not exist
         else:
-            # add key value pair
-            newNode = Node(key, value)
 
+            # create node
+            newNode = Node(key, value)
             # add to front
             self._add_to_front(newNode)
 
+            # add to cache
             self.cache[key] = newNode
 
             if len(self.cache) > self.capacity:
-                # evict lru node --> self.tail.prev 
+                # lru_node is self.tail.prev
                 lru_node = self.tail.prev
 
-                # remove from ll
-                self._remove_(lru_node)
+                # remove the node
+                self._remove(lru_node)
 
-                # del from cache
+                # del node from cache
                 del self.cache[lru_node.key]
 
 
