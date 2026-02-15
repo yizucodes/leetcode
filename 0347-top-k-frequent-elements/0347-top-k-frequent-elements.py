@@ -1,21 +1,25 @@
-from collections import Counter 
 import heapq
+from collections import Counter
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        # freqMap
-        freqMap = Counter(nums)
         minHeap = []
+        # num: freq
+        freqMap = Counter(nums)
 
-        # create minHeap with tuples (freq, element)
-        for el, freq in freqMap.items():
+        for num, freq in freqMap.items():
             if len(minHeap) < k:
-                # push top of heap
-                heapq.heappush(minHeap, (freq, el))
-            # elif len(heap) == k and freq of element > freq top element of heap: 
-            elif len(minHeap) == k and freq > minHeap[0][0]:
-                # push new to min heap only if the freq is higher than the top value
+                # insert in heap (freq, num)
+                heapq.heappush(minHeap, (freq, num))
+            # elif freq > top of freq of top of Minheap num
+            elif freq > minHeap[0][0]:
+                # remove top
                 heapq.heappop(minHeap)
-                heapq.heappush(minHeap, (freq, el))
+                # insert new tuple
+                heapq.heappush(minHeap, (freq, num))
 
-        return [tup[1] for tup in minHeap]
+        # return only values from tuples
+        res = []
+        for freq, num in minHeap:
+            res.append(num)
+        return res
