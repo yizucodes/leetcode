@@ -19,7 +19,4 @@ class Solution:
                 heapq.heappush(minHeap, (freq, num))
 
         # return only values from tuples
-        res = []
-        for freq, num in minHeap:
-            res.append(num)
-        return res
+        return [num for freq, num in minHeap]
